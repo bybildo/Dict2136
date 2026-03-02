@@ -20,10 +20,17 @@ export class studyLevelService {
 
     applyTasks() {
         if (this.#lesson.type === 'local') {
+            const cards = Array.isArray(this.#lesson.cards)
+                ? this.#lesson.cards
+                : (Array.isArray(this.#lesson.words) ? this.#lesson.words : []);
+
+            this.#lesson.cards = cards;
+            this.#lesson.words = cards;
+
             for (const task of this.#tasks) {
                 const [index, pointsStr] = task.split(' ');
                 const points = Number(pointsStr);
-                const targetCards = [this.#lesson.cards[Number(index)]].filter(Boolean);
+                const targetCards = [cards[Number(index)]].filter(Boolean);
 
                 targetCards.forEach(card => {
                     card.studyLevel = Math.max(0, Math.min(card.studyLevel + points, 100));

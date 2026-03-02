@@ -37,11 +37,11 @@ export const useLessonsListLoader = () => {
             }
 
             const lessons = loadedLessons
-                .sort((a, b) => new Date(a.CreatedAt) - new Date(b.CreatedAt))
+                .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
                 .map(l => ({
                     title: l.title,
                     description: l.description,
-                    cardsLength: l.cards.length,
+                    cardsLength: l.words.length,
                     id: l.id,
                     author: 'you'
                 }));

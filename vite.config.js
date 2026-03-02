@@ -8,6 +8,7 @@ export default defineConfig({
   server: {
     port: 3001,
   },
+  base: '/Dict2136/',
   resolve: {
     alias: {
       '@hooks': path.resolve(__dirname, 'src/hooks'),

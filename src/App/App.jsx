@@ -1,7 +1,7 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useAuthCheck } from '../hooks/useAuthCheck';
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Authorization from '../Page/Authorization/Authorization.jsx';
 import MainPage from '../Page/MainPage/MainPage.jsx';
@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <GoogleOAuthProvider clientId={clientId}>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             {!isAuthorized && !isLocal ?
               (<Route path='/*' element={<Authorization isServerDown={isServerDown} setAuthorized={setAuthorized} />} />)
@@ -29,7 +29,7 @@ function App() {
             }
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </GoogleOAuthProvider>
     </>
   );

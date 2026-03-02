@@ -1,4 +1,4 @@
-import { memo, use, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import style from './style.module.css'
 import { useParams } from 'react-router-dom'
 import { useLessonLoader } from '@hooks/LessonHooks/useLessonLoader.js';
@@ -18,10 +18,11 @@ function Lesson() {
     const [errorMessage, setErrorMessage] = useState('');
     const [LearningType, setLearningType] = useState(-1);
     const [excPassed, setExcPassed] = useState(false);
-    const WordsStudyLevel = useMemo(() => new StudyLevelService(Lesson), [Lesson]);
+    const cards = Lesson?.cards ?? Lesson?.words ?? [];
+    const WordsStudyLevel = useMemo(() => new studyLevelService(Lesson), [Lesson]);
     const { LearningElemts } = useLearningController({
         learningType: LearningType, setLearningType: setLearningType, addPoint: (index, points) => WordsStudyLevel.addTask(`${index} ${points}`),
-        cards: Lesson.cards, onEscapePassed: setExcPassed, onClose: () => setLearningType(-1)
+        cards: cards, onEscapePassed: setExcPassed, onClose: () => setLearningType(-1)
     });
 
     if (errorMessage) return <div>{errorMessage}</div>;
@@ -39,7 +40,7 @@ function Lesson() {
                 <div>
                     <Header className={style.header} title={Lesson.title} description={Lesson.description} />
                     <LearningButons setLearningType={setLearningType} />
-                    <Words cards={Lesson.cards} />
+                    <Words cards={cards} />
                 </div> :
                 <div>
                     {LearningElemts}
